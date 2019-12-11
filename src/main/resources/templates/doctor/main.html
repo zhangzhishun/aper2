@@ -1,0 +1,172 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+    <title>用户主页</title>
+    <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
+    <script src="https://dcloud.io/hellomui/js/mui.min.js"></script>
+    <!-- Bootstrap core CSS -->
+    <link href="/aper/webjars/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://dcloud.io/hellomui/css/mui.min.css" rel="stylesheet"/>
+</head><!-- 在头部引入bootstrap的css包与js包 -->
+
+<body>
+<nav class="mui-bar mui-bar-tab">
+    <a class="mui-tab-item mui-active" href="#tabbar">
+        <span class="mui-icon mui-icon-home"></span>
+        <span class="mui-tab-label">首页</span>
+    </a>
+    <a class="mui-tab-item" href="#tabbar-with-msg">
+        <span class="mui-icon mui-icon-email">
+            <span class="mui-badge" th:if="${unHandleNumber} != '0'">
+                <span th:text="${unHandleNumber}"></span>
+            </span>
+        </span>
+        <span class="mui-tab-label">消息</span>
+    </a>
+    <a class="mui-tab-item" href="#tabbar-with-myAsk">
+        <span class="mui-icon mui-icon-email"></span>
+        <span class="mui-tab-label">回复记录</span>
+    </a>
+    <a class="mui-tab-item" href="#tabbar-with-set">
+        <span class="mui-icon mui-icon-gear"></span>
+        <span class="mui-tab-label">设置</span>
+    </a>
+</nav>
+<div class="mui-content">
+    <!-- 首页 -->
+    <header class="mui-bar mui-bar-nav" >
+        <h1 class="mui-title">首页</h1>
+    </header>
+    <div id="tabbar" class="mui-control-content mui-active" style="margin-top: 60px">
+        <div style="text-align: center">
+            <p>
+                请扫码支付费用 <span th:text="${fee}"></span> 元，记得保存截图哦！
+            </p>
+            <img src="static/img/public/wechatPay.png" data-preview-src="" data-preview-group="1" width="50%">
+            <br><br>
+            <p style="display: none">
+                <a href="./doctor/toAskVisit " type="button" class="btn btn-info" >开始问诊</a>
+            </p>
+        </div>
+    </div>
+    <!-- 消息 -->
+    <div id="tabbar-with-msg" class="mui-control-content" style="margin-top: 60px">
+        <header class="mui-bar mui-bar-nav">
+            <h1 class="mui-title">消息</h1>
+            <a class="btn" href="./doctorMain" >刷新</a>
+        </header>
+        <ul class="mui-table-view mui-table-view-chevron">
+            <tr th:each="msg:${myReply}">
+                <div class="mui-card" >
+                    <a th:href ="@{'./doctor/getREPORTFORM/' + ${msg['REPORTFORM_ID']} }">
+                        <!--页眉，放置标题-->
+                        <div class="mui-card-header mui-card-media">
+                            <img src="./static/img/public/head.png" />
+                            <div class="mui-media-body">
+                                标题为："<td th:text="${msg['REPORTFORM_TITLE']}"></td>"的咨询
+                                <br>咨询于<span th:text="${msg['REPORTFORM_TIME']}"></span>
+                                <span th:if="${msg['REPORTFORM_STATE']}==0">[未回复]
+                            </span>
+                            </div>
+                        </div>
+                        <!--内容区-->
+                        <div class="mui-card-content">
+                            <div style="margin:10px 5px">
+                                <td th:text="${msg['REPORTFORM_CONTENT']}"></td>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </tr>
+            <br>
+        </ul>
+    </div>
+    <!-- 我的问诊 -->
+    <div id="tabbar-with-myAsk" class="mui-control-content" style="margin-top: 60px">
+
+        <header class="mui-bar mui-bar-nav">
+            <h1 class="mui-title">回复记录</h1>
+            <a class="btn" href="./doctorMain" >刷新</a>
+        </header>
+        <ul class="mui-table-view mui-table-view-chevron">
+            <tr th:each="msg:${replyByDOCTORID}">
+                <div class="mui-card" >
+                    <a th:href ="@{'./doctor/getREPLYByID/' + ${msg['REPLY_ID']} }">
+                        <!--页眉，放置标题-->
+                        <div class="mui-card-header mui-card-media">
+                            <img src="./static/img/public/head.png" />
+                            <div class="mui-media-body">
+                                回复内容为："<td th:text="${msg['REPLY_CONTENT']}"></td>"的咨询
+                                <br>咨询于<span th:text="${msg['REPLY_TIME']}"></span>
+                                <span th:if="${msg['REPLY_STATE']}==1">[对方已读]
+                            </span>
+                            </div>
+                        </div>
+                        <!--内容区-->
+                        <div class="mui-card-content">
+                            <div style="margin:10px 5px">
+                                <td th:text="${msg['REPORTFORM_CONTENT']}"></td>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </tr>
+            <br>
+        </ul>
+    </div>
+    <!-- 设置 -->
+    <div id="tabbar-with-set" class="mui-control-content" style="margin-top: 60px">
+        <header class="mui-bar mui-bar-nav">
+            <h1 class="mui-title">设置</h1>
+        </header>
+        <ul class="mui-table-view mui-table-view-chevron">
+            <li class="mui-table-view-cell mui-media">
+                <img class="mui-media-object mui-pull-left head-img" id="head-img" src="static/img/assets/logo.png">
+                <div class="mui-media-body">
+                    <span th:text="${session.doctorName}"></span>
+                    <p class="mui-ellipsis">用户名:<span th:text="${session.doctorName}"></span></p>
+                </div>
+            </li>
+        </ul>
+
+        <ul class="mui-table-view" style="margin-top: 25px;">
+            <li class="mui-table-view-cell">
+                <a href="./doctor/updateDoctor" class="mui-navigate-right">
+                    修改个人信息
+                </a>
+            </li>
+        </ul>
+        <ul class="mui-table-view">
+            <li class="mui-table-view-cell">
+                <a href="./doctor/advice" class="mui-navigate-right">
+                    反馈
+                </a>
+            </li>
+        </ul>
+        <ul class="mui-table-view" style="margin-top: 25px;">
+            <li class="mui-table-view-cell">
+                <a href="./about" class="mui-navigate-right">
+                    关于APP
+                </a>
+            </li>
+        </ul>
+        <ul class="mui-table-view" style="margin-top: 25px;">
+            <li class="mui-table-view-cell">
+                <a href="./exit" style="text-align: center;color: #FF3B30;">
+                    退出登录
+                </a>
+            </li>
+        </ul>
+    </div>
+</div>
+
+
+<script>
+    mui.init({
+        swipeBack:true, //启用右滑关闭功能
+    });
+</script>
+
+</body>
+</html>

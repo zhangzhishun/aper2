@@ -1,0 +1,79 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+    <title>用户注册</title>
+    <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
+    <script src="https://dcloud.io/hellomui/js/mui.min.js"></script>
+    <!-- Bootstrap core CSS -->
+    <link href="/aper/webjars/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://dcloud.io/hellomui/css/mui.min.css" rel="stylesheet"/><style>
+</style>
+</head>
+
+<body>
+<header class="mui-bar mui-bar-nav">
+    <h1 class="mui-title">更改信息</h1>
+</header>
+<div class="mui-content" style="margin: 20px 10px 0px 10px">
+    <span>用户名(登录名不可修改)：</span>
+    <input type="text" name="USER_NAME" style="display:block" th:value="${user['USER_NAME']}" readonly="readonly">
+    <span>密码：</span>
+    <input type="text" name="USER_PASSWORD" th:value="${user['USER_PASSWORD']}">
+    <span>手机号：</span>
+    <input type="text" name="USER_PHONE" th:value="${user['USER_PHONE']}">
+    <span>性别：</span>
+    <input type="text" name="USER_SEX" th:value="${user['USER_SEX']}">
+    <span>真实名字：</span>
+    <input type="text" name="USER_REALNAME" th:value="${user['USER_REALNAME']}">
+    <span>微信：</span>
+    <input type="text" name="USER_WECHAT" th:value="${user['USER_WECHAT']}">
+
+    <div style="text-align: center;margin: 10px;">
+        <p><input name="update" type="submit" value="更新"/></p>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $("input[name='update']").click(function(){
+        let post = $.post("./updateUserPost",
+            {
+                USER_NAME:$("input[name='USER_NAME']").val(),
+                USER_PASSWORD:$("input[name='USER_PASSWORD']").val(),
+                USER_PHONE:$("input[name='USER_PHONE']").val(),
+                USER_SEX:$("input[name='USER_SEX']").val(),
+                USER_REALNAME:$("input[name='USER_REALNAME']").val(),
+                USER_WECHAT:$("input[name='USER_WECHAT']").val(),
+            },
+            function(data,status){
+                if(data=="1" && status=="success"){
+                    alert("更新成功");
+                }else{
+                    alert("更新失败");
+                }
+            });
+    });
+
+    //ajax提交信息
+    /*$("#apply_link_form").submit(function(){
+        //alert("111");
+        parent.layer.close(index); //再执行关闭
+        $.ajax({
+            async: false,
+            type: "post",
+            url:'./registerPost',
+            contentType : "application/x-www-form-urlencoded; charset=utf-8",
+            data:$("#apply_link_form").serialize(),
+            dataType: "text",
+            success: function (data) {
+                alert(data);
+            },
+            error: function (data) {
+                alert(data);
+            }
+        })
+    })*/
+</script>
+</body>
+
+</html>

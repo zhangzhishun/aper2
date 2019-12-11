@@ -1,0 +1,47 @@
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+		<meta name="description" content="">
+		<meta name="author" content="">
+		<title>登录</title>
+		<script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
+		<!-- Bootstrap core CSS -->
+		<link href="/aper/webjars/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
+		<!-- Custom styles for this template -->
+		<link href="css/signin.css" rel="stylesheet">
+	</head>
+	<body class="text-center">
+		<form class="form-signin" action="./login" name="loginForm" method="post">
+			<img class="mb-4" src="./static/img/public/head.png" alt="头像" width="90" height="90">
+			<h1 class="h3 mb-3 font-weight-normal">用户登录</h1>
+			<!--判断-->
+			<p style="color: red" th:text="${msg}" th:if="${not #strings.isEmpty(msg)}"></p>
+			<label class="sr-only" >用户名</label>
+			<input type="text"  name="username" id="username" class="form-control" placeholder="Username" required="" autofocus="">
+			<label class="sr-only">密码</label>
+			<input type="password" name="password" id="password" class="form-control" placeholder="Password" required="">
+			<div class="checkbox mb-3">
+				<label>
+          			<input type="checkbox" value="remember-me"/> 记住密码
+        		</label>
+			</div>
+			<input type="hidden" name="type" id="type" value="">
+			<button id="btn1" type="button" class="btn btn-primary btn-sm" onClick="userLogin()">用户登陆</button>
+			<button id="btn2" type="button" class="btn btn-primary btn-sm" onClick="doctorLogin()">医生登陆</button>
+			<div style="text-align: right">
+				<a class="btn btn-link" href="./register" style="font-size:12px;">注册</a>
+			</div>
+		</form>
+	</body>
+	<script type="text/javascript">
+		function userLogin() {
+			$("#type").attr("value","user");
+			document.loginForm.submit();
+		}
+		function doctorLogin() {
+			$("#type").attr("value","doctor");
+			document.loginForm.submit();
+		}
+	</script>
+</html>

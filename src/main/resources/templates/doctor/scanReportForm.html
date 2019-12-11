@@ -1,0 +1,102 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+    <title>Main_Nav_Bottom</title>
+    <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
+    <script src="https://dcloud.io/hellomui/js/mui.min.js"></script>
+    <!-- Bootstrap core CSS -->
+    <link href="/aper/webjars/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://dcloud.io/hellomui/css/mui.min.css" rel="stylesheet"/>
+</head><!-- 在头部引入bootstrap的css包与js包 -->
+
+<body>
+<header class="mui-bar mui-bar-nav">
+    <h1 class="mui-title">体检单结果</h1>
+</header>
+<div class="mui-content">
+    <ul class="mui-table-view">
+        <span th:each="reportForm:${reportForm}">
+            <input type="text" name="REPORTFORM_ID" th:value="${reportForm['REPORTFORM_ID']}" style="display: none">
+         </span>
+        <li class="mui-table-view-cell">
+            <span th:each="reportForm:${reportForm}">
+                咨询ID：<span th:text="${reportForm['REPORTFORM_ID']}"></span>
+            </span>
+        </li>
+        <li class="mui-table-view-cell">
+            <span th:each="reportForm:${reportForm}">
+                咨询题目：<span th:text="${reportForm['REPORTFORM_TITLE']}"></span>
+            </span>
+        </li>
+        <li class="mui-table-view-cell">
+            <span th:each="reportForm:${reportForm}">
+                咨询内容：<span th:text="${reportForm['REPORTFORM_CONTENT']}"></span>
+            </span>
+        </li>
+        <li class="mui-table-view-cell">
+            <span th:each="reportForm:${reportForm}">
+                资讯科室：<span th:text="${reportForm['REPORTFORM_OFFICEID']}"></span>
+            </span>
+        </li>
+        <li class="mui-table-view-cell">
+            <span th:each="reportForm:${reportForm}">
+                咨询时间：<span th:text="${reportForm['REPORTFORM_TIME']}"></span>
+            </span>
+        </li>
+        <li class="mui-table-view-cell">
+            <span th:each="reportForm:${reportForm}">
+                咨询状态： <span th:text="${reportForm['REPORTFORM_STATE']}"></span>
+            </span>
+        </li>
+        <li class="mui-table-view-cell">
+            附加图片：
+            <span th:each="reportFormImgs:${reportFormImgs }">
+                <img style="width: 100%" th:src="@{'../../static/img/reportForm/' + ${reportFormImgs}}">
+            </span>
+        </li>
+        <!-- 如果已经回复就不在显示回复框和按钮-->
+        <span th:each="reportForm:${reportForm}">
+            <div th:if="${reportForm['REPORTFORM_STATE']}==0">
+                <li class="mui-table-view-cell">
+                    回复内容：
+                    <input type="text" name="REPLY_CONTENT" placeholder="请输入回复内容" >
+                 </li>
+            </div>
+        </span>
+    </ul>
+    <!-- 如果已经回复就不在显示回复框和按钮-->
+    <span th:each="reportForm:${reportForm}">
+        <div th:if="${reportForm['REPORTFORM_STATE']}==0">
+            <div style="text-align: center;margin: 10px 10px;">
+                <button id="but_ok" type="button" class="btn btn-primary btn-sm">回复</button>
+            </div>
+        </div>
+    </span>
+
+</div>
+
+<script>
+    mui.init({
+        swipeBack:true //启用右滑关闭功能
+    });
+
+
+    $("button[id='but_ok']").click(function(){
+        //alert($("input[name='REPLY_ID']").val());
+        $.post("../addReply", {
+                REPLY_REPOTFORMID:$("input[name='REPORTFORM_ID']").val(),
+                REPLY_CONTENT:$("input[name='REPLY_CONTENT']").val(),
+            },
+            function(data,status){
+                if(data=="1" && status=="success"){
+                    alert("您已回复 ");
+                    window.location.replace("../../doctorMain");
+                }else{
+                    alert("服务器故障或咨询已回复");
+                }
+            });
+    });
+</script>
+</body>
+</html>

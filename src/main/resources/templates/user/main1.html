@@ -1,0 +1,119 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+    <title>Main_Nav_Bottom</title>
+    <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
+    <script src="https://dcloud.io/hellomui/js/mui.min.js"></script>
+    <!-- Bootstrap core CSS -->
+    <link href="/aper/webjars/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://dcloud.io/hellomui/css/mui.min.css" rel="stylesheet"/>
+</head><!-- 在头部引入bootstrap的css包与js包 -->
+
+<body>
+
+<header class="mui-bar mui-bar-nav">
+    <h1 class="mui-title">问诊体检单</h1>
+</header>
+<nav class="mui-bar mui-bar-tab">
+    <a class="mui-tab-item mui-active" href="#tabbar">
+        <span class="mui-icon mui-icon-home"></span>
+        <span class="mui-tab-label">首页</span>
+    </a>
+    <a class="mui-tab-item" href="#tabbar-with-chat">
+        <span class="mui-icon mui-icon-email"></span>
+        <span class="mui-tab-label">问诊</span>
+    </a>
+    <a class="mui-tab-item" href="#tabbar-with-chat">
+        <span class="mui-icon mui-icon-email"><span class="mui-badge">9</span></span>
+        <span class="mui-tab-label">消息</span>
+    </a>
+    <a class="mui-tab-item" href="#tabbar-with-map">
+        <span class="mui-icon mui-icon-gear"></span>
+        <span class="mui-tab-label">设置</span>
+    </a>
+</nav>
+<div class="mui-content">
+    <div id="tabbar" class="mui-control-content mui-active">
+        <div class="mui-slider">
+            <div class="mui-slider-group mui-slider-loop">
+                <!--支持循环，需要重复图片节点-->
+                <div class="mui-slider-item mui-slider-item-duplicate"><a href="#"><img src="img/home/1.png" /></a></div>
+                <div class="mui-slider-item"><a href="#"><img src="./img/home/1.png" /></a></div>
+                <div class="mui-slider-item"><a href="#"><img src="./img/home/1.png" /></a></div>
+                <div class="mui-slider-item"><a href="#"><img src="static/img/home/1.png" /></a></div>
+                <div class="mui-slider-item"><a href="#"><img src="static/img/home/1.png" /></a></div>
+                <!--支持循环，需要重复图片节点-->
+                <div class="mui-slider-item mui-slider-item-duplicate"><a href="#"><img src="./img/home/1.png" /></a></div>
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">
+                    带有 title 的面板标题
+                </h3>
+            </div>
+            <div class="panel-body">
+                面板内容
+            </div>
+        </div>
+        <!-- 信息警告消息的上下文按钮 -->
+        <button type="button" class="btn btn-info">信息按钮</button>
+    </div>
+    <div id="tabbar-with-chat" class="mui-control-content">
+        <div class="title">这是div模式选项卡中的第2个子页面，该页面展示一个消息列表</div>
+
+        <ul class="mui-table-view mui-table-view-chevron">
+            <li class="mui-table-view-cell"><a href="" class="mui-navigate-right">Item 1</a></li>
+            <li class="mui-table-view-cell"><a href="" class="mui-navigate-right">Item 2</a></li>
+            <li class="mui-table-view-cell"><a href="" class="mui-navigate-right">Item 3</a></li>
+        </ul>
+
+    </div>
+    <div id="tabbar-with-contact" class="mui-control-content">
+        <div class="title">这是div模式选项卡中的第3个子页面，该页面展示一个通讯录示例.</div>
+
+    </div>
+    <div id="tabbar-with-map" class="mui-control-content">
+        <ul class="mui-table-view">
+            <li class="mui-table-view-cell">
+                <a class="mui-navigate-right">
+                    新消息通知
+                </a>
+            </li>
+            <li class="mui-table-view-cell">
+                <a class="mui-navigate-right">
+                    隐私
+                </a>
+            </li>
+            <li class="mui-table-view-cell">
+                <a class="mui-navigate-right">
+                    通用
+                </a>
+            </li>
+        </ul>
+        <ul class="mui-table-view" style="margin-top: 25px;">
+            <li class="mui-table-view-cell">
+                <a class="mui-navigate-right">
+                    关于mui
+                </a>
+            </li>
+        </ul>
+        <ul class="mui-table-view" style="margin-top: 25px;">
+            <li class="mui-table-view-cell">
+                <a style="text-align: center;color: #FF3B30;">
+                    退出登录
+                </a>
+            </li>
+        </ul>
+    </div>
+</div>
+
+<script>
+    mui.init({
+        swipeBack:true //启用右滑关闭功能
+    });
+</script>
+
+</body>
+</html>

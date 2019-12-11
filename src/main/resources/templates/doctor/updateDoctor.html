@@ -1,0 +1,90 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+    <title>用户注册</title>
+    <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
+    <script src="https://dcloud.io/hellomui/js/mui.min.js"></script>
+    <!-- Bootstrap core CSS -->
+    <link href="/aper/webjars/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://dcloud.io/hellomui/css/mui.min.css" rel="stylesheet"/><style>
+</style>
+</head>
+
+<body>
+<header class="mui-bar mui-bar-nav">
+    <h1 class="mui-title">更改信息</h1>
+</header>
+<div class="mui-content" style="margin: 20px 10px 0px 10px">
+    <span>用户名(登录名不可修改)：</span>
+    <input type="text" name="DOCTOR_NAME" style="display:block" th:value="${doctor['DOCTOR_NAME']}" readonly="readonly">
+    <span>密码：</span>
+    <input type="text" name="DOCTOR_PASSWORD" th:value="${doctor['DOCTOR_PASSWORD']}">
+    <span>手机号：</span>
+    <input type="text" name="DOCTOR_REALNAME" th:value="${doctor['DOCTOR_REALNAME']}">
+    <span>性别：</span>
+    <input type="text" name="DOCTOR_SEX" th:value="${doctor['DOCTOR_SEX']}">
+    <span>真实名字：</span>
+    <input type="text" name="DOCTOR_PHONE" th:value="${doctor['DOCTOR_PHONE']}">
+    <span>微信：</span>
+    <input type="text" name="DOCTOR_WECHAT" th:value="${doctor['DOCTOR_WECHAT']}">
+    <div>
+        <!-- officeList -->
+        <label>科室：</label>
+        <select class="mui-h5" name="DOCTOR_OFFICEID" style="margin:auto; color:#000;">
+            <!--<option value="">全部</option>-->
+            <span th:each="office:${officeList}">
+                    <option th:value="${office['OFFICE_ID']}">
+                        <span th:text="${office['OFFICE_NAME']}"></span>
+                    </option>
+                </span>
+        </select>
+    </div>
+    <div style="text-align: center;margin: 10px;">
+        <p><input name="update" type="submit" value="更新"/></p>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $("input[name='update']").click(function(){
+        let post = $.post("./updateDoctorPost", {
+                DOCTOR_NAME:$("input[name='DOCTOR_NAME']").val(),
+                DOCTOR_PASSWORD:$("input[name='DOCTOR_PASSWORD']").val(),
+                DOCTOR_REALNAME:$("input[name='DOCTOR_REALNAME']").val(),
+                DOCTOR_SEX:$("input[name='DOCTOR_SEX']").val(),
+                DOCTOR_PHONE:$("input[name='DOCTOR_PHONE']").val(),
+                DOCTOR_WECHAT:$("input[name='DOCTOR_WECHAT']").val(),
+                DOCTOR_OFFICEID:$("select[name='DOCTOR_OFFICEID']").val(),
+            },
+            function(data,status){
+                if(data=="1" && status=="success"){
+                    alert("更新成功");
+                }else{
+                    alert("更新失败");
+                }
+            });
+    });
+
+    //ajax提交信息
+    /*$("#apply_link_form").submit(function(){
+        //alert("111");
+        parent.layer.close(index); //再执行关闭
+        $.ajax({
+            async: false,
+            type: "post",
+            url:'./registerPost',
+            contentType : "application/x-www-form-urlencoded; charset=utf-8",
+            data:$("#apply_link_form").serialize(),
+            dataType: "text",
+            success: function (data) {
+                alert(data);
+            },
+            error: function (data) {
+                alert(data);
+            }
+        })
+    })*/
+</script>
+</body>
+
+</html>

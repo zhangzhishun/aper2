@@ -1,0 +1,119 @@
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <title>更新用户信息</title>
+
+  <!-- Custom fonts for this template-->
+  <link href="../vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+
+  <!-- Custom styles for this template-->
+  <link href="../css/sb-admin-2.min.css" rel="stylesheet">
+
+</head>
+
+<body id="page-top">
+<!-- Page Wrapper -->
+<div id="wrapper">
+    <!-- Content Wrapper -->
+    <div id="content-wrapper" class="d-flex flex-column">
+
+      <!-- Main Content -->
+      <div id="content">
+
+        <!-- Topbar -->
+        <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+
+          <!-- Sidebar Toggle (Topbar) -->
+          <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
+            <i class="fa fa-bars"></i>
+          </button>
+
+          <!-- Topbar Search -->
+          <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
+            <div class="input-group">
+              <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
+              <div class="input-group-append">
+                <button class="btn btn-primary" type="button">
+                  <i class="fas fa-search fa-sm"></i>
+                </button>
+              </div>
+            </div>
+          </form>
+        </nav>
+        <!-- End of Topbar -->
+
+        <!-- Begin Page Content -->
+        <!-- DataTales Example -->
+        <div class="container-fluid" style="width:60% " th:each="office:${office}">
+          <div class="form-group">
+            <span> 科室ID： </span>
+            <input type="text" name="OFFICE_ID" readonly="readonly" th:value="${office['OFFICE_ID']}" class="form-control form-control-user" aria-describedby="emailHelp">
+          </div>
+          <div class="form-group">
+            <span> 科室名： </span>
+            <input type="text" name="OFFICE_NAME" th:value="${office['OFFICE_NAME']}" class="form-control form-control-user" aria-describedby="emailHelp">
+          </div>
+          <p><input class="btn btn-primary btn-user btn-block" name="updateOffice" type="submit" value="更新"/></p>
+          <hr>
+
+        </div>
+      <!-- /.container-fluid -->
+
+    </div>
+  <!-- End of Main Content -->
+
+</div>
+<!-- End of Content Wrapper -->
+
+</div>
+<!-- End of Page Wrapper -->
+
+<!-- Scroll to Top Button-->
+<a class="scroll-to-top rounded" href="#page-top">
+  <i class="fas fa-angle-up"></i>
+</a>
+
+<!-- Bootstrap core JavaScript-->
+<script src="../vendor/jquery/jquery.min.js"></script>
+<script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+<!-- Core plugin JavaScript-->
+<script src="../vendor/jquery-easing/jquery.easing.min.js"></script>
+
+<!-- Custom scripts for all pages-->
+<script src="../js/sb-admin-2.min.js"></script>
+
+<!-- Page level plugins -->
+<script src="../vendor/datatables/jquery.dataTables.min.js"></script>
+<script src="../vendor/datatables/dataTables.bootstrap4.min.js"></script>
+
+<!-- Page level custom scripts -->
+<script src="js/demo/datatables-demo.js"></script>
+<script type="text/javascript">
+  $("input[name='updateOffice']").click(function(){
+    let post = $.post("../updateOffice", {
+              OFFICE_ID:$("input[name='OFFICE_ID']").val(),
+              OFFICE_NAME:$("input[name='OFFICE_NAME']").val(),
+            },
+            function(data,status){
+              if(data=="1" && status=="success"){
+                alert("更新成功");
+                window.location.replace("../getAllOffice");
+              }else{
+                alert("更新失败");
+              }
+            });
+  });
+</script>
+
+</body>
+
+</html>

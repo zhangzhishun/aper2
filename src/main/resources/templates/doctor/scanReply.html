@@ -1,0 +1,66 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+    <title>Main_Nav_Bottom</title>
+    <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
+    <script src="https://dcloud.io/hellomui/js/mui.min.js"></script>
+    <!-- Bootstrap core CSS -->
+    <link href="/aper/webjars/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://dcloud.io/hellomui/css/mui.min.css" rel="stylesheet"/>
+</head><!-- 在头部引入bootstrap的css包与js包 -->
+
+<body>
+<header class="mui-bar mui-bar-nav">
+    <h1 class="mui-title">体检单结果</h1>
+</header>
+<div class="mui-content">
+    <ul class="mui-table-view">
+        <li class="mui-table-view-cell">
+            <span th:each="reply:${reply}">
+                回复ID：<span th:text="${reply['REPLY_ID']}"></span>
+            </span>
+        </li>
+        <li class="mui-table-view-cell">
+            <span th:each="reply:${reply}">
+                分析时间：<span th:text="${reply['REPLY_TIME']}"></span>
+            </span>
+        </li>
+        <li class="mui-table-view-cell">
+            <span th:each="reply:${reply}">
+                分析结果： <span th:text="${reply['REPLY_CONTENT']}"></span>
+            </span>
+        </li>
+    </ul>
+    <div style="text-align: center;margin: 10px 10px;">
+        <span th:each="reply:${reply }">
+            <input type="text" name="REPLY_ID" th:value="${reply['REPLY_ID']}" style="display: none">
+            <div style="text-align: center;margin: 10px 10px;">
+                <a  type="button" class="btn btn-primary btn-sm" th:href="@{'../getREPORTFORM/' + ${reply['REPLY_REPOTFORMID']}}">查看咨询内容</a>
+                <button id="but_ok" type="button" class="btn btn-primary btn-sm">删除回复</button>
+            </div>
+        </span>
+    </div>
+</div>
+
+<script>
+    mui.init({
+        swipeBack:true //启用右滑关闭功能
+    });
+    $("button[id='but_ok']").click(function(){
+        //alert($("input[name='REPLY_ID']").val());
+        $.post("../deleteREPLYByID", {
+                REPLY_ID:$("input[name='REPLY_ID']").val(),
+            },
+            function(data,status){
+                if(data=="1" && status=="success"){
+                    alert("您已删除 ");
+                    window.location.replace("../../doctorMain");
+                }else{
+                    alert("服务器故障或咨询已回复");
+                }
+            });
+    });
+</script>
+</body>
+</html>
